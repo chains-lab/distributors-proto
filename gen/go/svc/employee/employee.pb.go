@@ -620,27 +620,27 @@ func (x *AcceptInviteRequest) GetId() string {
 	return ""
 }
 
-type DeclineInviteRequest struct {
+type RejectInviteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // ID of the invite to decline
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeclineInviteRequest) Reset() {
-	*x = DeclineInviteRequest{}
+func (x *RejectInviteRequest) Reset() {
+	*x = RejectInviteRequest{}
 	mi := &file_svc_employee_employee_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeclineInviteRequest) String() string {
+func (x *RejectInviteRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeclineInviteRequest) ProtoMessage() {}
+func (*RejectInviteRequest) ProtoMessage() {}
 
-func (x *DeclineInviteRequest) ProtoReflect() protoreflect.Message {
+func (x *RejectInviteRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_svc_employee_employee_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -652,12 +652,12 @@ func (x *DeclineInviteRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeclineInviteRequest.ProtoReflect.Descriptor instead.
-func (*DeclineInviteRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use RejectInviteRequest.ProtoReflect.Descriptor instead.
+func (*RejectInviteRequest) Descriptor() ([]byte, []int) {
 	return file_svc_employee_employee_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *DeclineInviteRequest) GetId() string {
+func (x *RejectInviteRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
@@ -1132,8 +1132,8 @@ const file_svc_employee_employee_proto_rawDesc = "" +
 	"\x15WithdrawInviteRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"%\n" +
 	"\x13AcceptInviteRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"&\n" +
-	"\x14DeclineInviteRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"%\n" +
+	"\x13RejectInviteRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"\xd4\x01\n" +
 	"\bEmployee\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12%\n" +
@@ -1165,7 +1165,7 @@ const file_svc_employee_employee_proto_rawDesc = "" +
 	"\ainvites\x18\x01 \x03(\v2\x10.employee.InviteR\ainvites\x124\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x14.pagination.ResponseR\n" +
-	"pagination2\x9a\x06\n" +
+	"pagination2\x98\x06\n" +
 	"\x0fEmployeeService\x12?\n" +
 	"\vGetEmployee\x12\x1c.employee.GetEmployeeRequest\x1a\x12.employee.Employee\x12U\n" +
 	"\x16GetDistributorEmployee\x12'.employee.GetDistributorEmployeeRequest\x1a\x12.employee.Employee\x12L\n" +
@@ -1177,8 +1177,8 @@ const file_svc_employee_employee_proto_rawDesc = "" +
 	"\tGetInvite\x12\x1a.employee.GetInviteRequest\x1a\x10.employee.Invite\x12F\n" +
 	"\rSelectInvites\x12\x1e.employee.SelectInvitesRequest\x1a\x15.employee.InvitesList\x12C\n" +
 	"\x0eWithdrawInvite\x12\x1f.employee.WithdrawInviteRequest\x1a\x10.employee.Invite\x12?\n" +
-	"\fAcceptInvite\x12\x1d.employee.AcceptInviteRequest\x1a\x10.employee.Invite\x12A\n" +
-	"\rDeclineInvite\x12\x1e.employee.DeclineInviteRequest\x1a\x10.employee.InviteBPZNgithub.com/chains-lab/distributors-proto/gen/go/employee/employee;cemployeeityb\x06proto3"
+	"\fAcceptInvite\x12\x1d.employee.AcceptInviteRequest\x1a\x10.employee.Invite\x12?\n" +
+	"\fRejectInvite\x12\x1d.employee.RejectInviteRequest\x1a\x10.employee.InviteBPZNgithub.com/chains-lab/distributors-proto/gen/go/employee/employee;cemployeeityb\x06proto3"
 
 var (
 	file_svc_employee_employee_proto_rawDescOnce sync.Once
@@ -1204,7 +1204,7 @@ var file_svc_employee_employee_proto_goTypes = []any{
 	(*SelectInvitesRequest)(nil),          // 7: employee.SelectInvitesRequest
 	(*WithdrawInviteRequest)(nil),         // 8: employee.WithdrawInviteRequest
 	(*AcceptInviteRequest)(nil),           // 9: employee.AcceptInviteRequest
-	(*DeclineInviteRequest)(nil),          // 10: employee.DeclineInviteRequest
+	(*RejectInviteRequest)(nil),           // 10: employee.RejectInviteRequest
 	(*Employee)(nil),                      // 11: employee.Employee
 	(*EmployeesList)(nil),                 // 12: employee.EmployeesList
 	(*Invite)(nil),                        // 13: employee.Invite
@@ -1239,7 +1239,7 @@ var file_svc_employee_employee_proto_depIdxs = []int32{
 	7,  // 19: employee.EmployeeService.SelectInvites:input_type -> employee.SelectInvitesRequest
 	8,  // 20: employee.EmployeeService.WithdrawInvite:input_type -> employee.WithdrawInviteRequest
 	9,  // 21: employee.EmployeeService.AcceptInvite:input_type -> employee.AcceptInviteRequest
-	10, // 22: employee.EmployeeService.DeclineInvite:input_type -> employee.DeclineInviteRequest
+	10, // 22: employee.EmployeeService.RejectInvite:input_type -> employee.RejectInviteRequest
 	11, // 23: employee.EmployeeService.GetEmployee:output_type -> employee.Employee
 	11, // 24: employee.EmployeeService.GetDistributorEmployee:output_type -> employee.Employee
 	12, // 25: employee.EmployeeService.SelectEmployees:output_type -> employee.EmployeesList
@@ -1250,7 +1250,7 @@ var file_svc_employee_employee_proto_depIdxs = []int32{
 	14, // 30: employee.EmployeeService.SelectInvites:output_type -> employee.InvitesList
 	13, // 31: employee.EmployeeService.WithdrawInvite:output_type -> employee.Invite
 	13, // 32: employee.EmployeeService.AcceptInvite:output_type -> employee.Invite
-	13, // 33: employee.EmployeeService.DeclineInvite:output_type -> employee.Invite
+	13, // 33: employee.EmployeeService.RejectInvite:output_type -> employee.Invite
 	23, // [23:34] is the sub-list for method output_type
 	12, // [12:23] is the sub-list for method input_type
 	12, // [12:12] is the sub-list for extension type_name
