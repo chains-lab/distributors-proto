@@ -392,7 +392,7 @@ func (x *SendInviteRequest) GetRole() string {
 
 type GetInviteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // ID of the invite
+	InviteId      string                 `protobuf:"bytes,1,opt,name=invite_id,json=inviteId,proto3" json:"invite_id,omitempty"` // ID of the invite
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -427,9 +427,9 @@ func (*GetInviteRequest) Descriptor() ([]byte, []int) {
 	return file_svc_employee_employee_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *GetInviteRequest) GetId() string {
+func (x *GetInviteRequest) GetInviteId() string {
 	if x != nil {
-		return x.Id
+		return x.InviteId
 	}
 	return ""
 }
@@ -534,7 +534,7 @@ func (*SelectInvitesRequest_SendAtDescend) isSelectInvitesRequest_Sort() {}
 
 type WithdrawInviteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // ID of the invite to withdraw
+	InviteId      string                 `protobuf:"bytes,1,opt,name=invite_id,json=inviteId,proto3" json:"invite_id,omitempty"` // ID of the invite to withdraw
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -569,16 +569,16 @@ func (*WithdrawInviteRequest) Descriptor() ([]byte, []int) {
 	return file_svc_employee_employee_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *WithdrawInviteRequest) GetId() string {
+func (x *WithdrawInviteRequest) GetInviteId() string {
 	if x != nil {
-		return x.Id
+		return x.InviteId
 	}
 	return ""
 }
 
 type AcceptInviteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // ID of the invite to accept
+	InviteId      string                 `protobuf:"bytes,1,opt,name=invite_id,json=inviteId,proto3" json:"invite_id,omitempty"` // ID of the invite to accept
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -613,16 +613,16 @@ func (*AcceptInviteRequest) Descriptor() ([]byte, []int) {
 	return file_svc_employee_employee_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *AcceptInviteRequest) GetId() string {
+func (x *AcceptInviteRequest) GetInviteId() string {
 	if x != nil {
-		return x.Id
+		return x.InviteId
 	}
 	return ""
 }
 
 type RejectInviteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // ID of the invite to decline
+	InviteId      string                 `protobuf:"bytes,1,opt,name=invite_id,json=inviteId,proto3" json:"invite_id,omitempty"` // ID of the invite to decline
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -657,9 +657,9 @@ func (*RejectInviteRequest) Descriptor() ([]byte, []int) {
 	return file_svc_employee_employee_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *RejectInviteRequest) GetId() string {
+func (x *RejectInviteRequest) GetInviteId() string {
 	if x != nil {
-		return x.Id
+		return x.InviteId
 	}
 	return ""
 }
@@ -1105,9 +1105,9 @@ const file_svc_employee_employee_proto_rawDesc = "" +
 	"\x11SendInviteRequest\x12%\n" +
 	"\x0edistributor_id\x18\x01 \x01(\tR\rdistributorId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x12\n" +
-	"\x04role\x18\x03 \x01(\tR\x04role\"\"\n" +
-	"\x10GetInviteRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\xd7\x03\n" +
+	"\x04role\x18\x03 \x01(\tR\x04role\"/\n" +
+	"\x10GetInviteRequest\x12\x1b\n" +
+	"\tinvite_id\x18\x01 \x01(\tR\binviteId\"\xd7\x03\n" +
 	"\x14SelectInvitesRequest\x12?\n" +
 	"\afilters\x18\x01 \x01(\v2%.employee.SelectInvitesRequest.filterR\afilters\x12&\n" +
 	"\x0esend_at_ascend\x18\x02 \x01(\bH\x00R\fsendAtAscend\x12(\n" +
@@ -1128,13 +1128,13 @@ const file_svc_employee_employee_proto_rawDesc = "" +
 	"\v_invited_byB\a\n" +
 	"\x05_roleB\t\n" +
 	"\a_statusB\x06\n" +
-	"\x04Sort\"'\n" +
-	"\x15WithdrawInviteRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"%\n" +
-	"\x13AcceptInviteRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"%\n" +
-	"\x13RejectInviteRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\xd4\x01\n" +
+	"\x04Sort\"4\n" +
+	"\x15WithdrawInviteRequest\x12\x1b\n" +
+	"\tinvite_id\x18\x01 \x01(\tR\binviteId\"2\n" +
+	"\x13AcceptInviteRequest\x12\x1b\n" +
+	"\tinvite_id\x18\x01 \x01(\tR\binviteId\"2\n" +
+	"\x13RejectInviteRequest\x12\x1b\n" +
+	"\tinvite_id\x18\x01 \x01(\tR\binviteId\"\xd4\x01\n" +
 	"\bEmployee\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12%\n" +
 	"\x0edistributor_id\x18\x02 \x01(\tR\rdistributorId\x12\x12\n" +

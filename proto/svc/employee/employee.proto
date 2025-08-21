@@ -71,7 +71,7 @@ message SendInviteRequest {
 }
 
 message GetInviteRequest {
-  string id = 1; // ID of the invite
+  string invite_id = 1; // ID of the invite
 }
 
 message SelectInvitesRequest {
@@ -94,15 +94,15 @@ message SelectInvitesRequest {
 }
 
 message WithdrawInviteRequest {
-  string id = 1; // ID of the invite to withdraw
+  string invite_id = 1; // ID of the invite to withdraw
 }
 
 message AcceptInviteRequest {
-  string id = 1; // ID of the invite to accept
+  string invite_id = 1; // ID of the invite to accept
 }
 
 message RejectInviteRequest {
-  string id = 1; // ID of the invite to decline
+  string invite_id = 1; // ID of the invite to decline
 }
 
 // RESPONSES
