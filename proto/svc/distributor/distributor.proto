@@ -1,7 +1,7 @@
 syntax = "proto3";
 package distributor;
 
-option go_package = "github.com/chains-lab/distributors-proto/gen/go/distributor/distributor;city";
+option go_package = "github.com/chains-lab/distributors-proto/gen/go/distributor/distributor;distributor";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
