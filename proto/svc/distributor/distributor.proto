@@ -1,0 +1,121 @@
+syntax = "proto3";
+package distributor;
+
+option go_package = "github.com/chains-lab/distributors-proto/gen/go/distributor/distributor;city";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "common/pagination/pagination.proto";
+
+service DistributorService {
+  rpc CreateDistributor(CreateDistributorRequest) returns (Distributor);
+
+  rpc GetDistributor(GetDistributorRequest) returns (Distributor);
+  rpc SelectDistributors(SelectDistributorsRequest) returns (DistributorList);
+
+  rpc UpdateDistributorName(UpdateDistributorNameRequest) returns (Distributor);
+  rpc UpdateDistributorIcon(UpdateDistributorIconRequest) returns (Distributor);
+
+  rpc SetDistributorStatusInactive(SetDistributorStatusInactiveRequest) returns (Distributor);
+  rpc SetDistributorStatusActive(SetDistributorStatusActiveRequest) returns (Distributor);
+
+  rpc GetDistributorBlock(GetDistributorBlockRequest) returns (DistributorBlock);
+  rpc SelectDistributorBlocks(SelectDistributorBlocksRequest) returns (DistributorBlocksList);
+
+  // Admin methods
+  rpc BlockDistributor(BlockDistributorRequest) returns (DistributorBlock);
+  rpc UnblockDistributor(UnblockDistributorRequest) returns (DistributorBlock);
+}
+
+// REQUESTS
+
+message CreateDistributorRequest {
+  string name = 1;
+}
+
+message GetDistributorRequest {
+  string distributor_id = 1;
+}
+
+message SelectDistributorsRequest {
+  message filter {
+    optional string name_like = 1;
+    optional string status    = 2; // "active", "inactive", "blocked"
+  }
+
+  filter filters = 1;
+  pagination.Request pagination = 2;
+}
+
+message UpdateDistributorNameRequest {
+  string distributor_id = 1;
+  string name           = 2;
+}
+
+message UpdateDistributorIconRequest {
+  string distributor_id = 1;
+  string icon_url       = 2; // URL to the icon image
+}
+
+message SetDistributorStatusInactiveRequest {
+  string distributor_id = 1;
+}
+
+message SetDistributorStatusActiveRequest {
+  string distributor_id = 1;
+}
+
+message GetDistributorBlockRequest {
+  string block_id = 1;
+}
+
+message SelectDistributorBlocksRequest {
+  message filter {
+    optional string distributor_id = 1;
+    optional string status         = 2; // "active", "inactive", "blocked"
+    optional string initiator_id   = 3; // ID of the user who initiated the block
+  }
+
+  filter filters = 1;
+  pagination.Request pagination = 2;
+}
+
+message BlockDistributorRequest {
+  string distributor_id = 1;
+  string reason         = 2; // Reason for blocking
+}
+
+message UnblockDistributorRequest {
+  string distributor_id = 1;
+}
+
+// RESPONSES
+
+message Distributor {
+  string id     = 1;
+  string name   = 2;
+  string icon   = 3; // URL to the icon image
+  string status = 4; // "active", "inactive", "blocked"
+  google.protobuf.Timestamp updated_at = 5; // Timestamp of creation
+  google.protobuf.Timestamp created_at = 6; // Timestamp of creation
+}
+
+message DistributorList {
+  repeated Distributor distributors = 1;
+  pagination.Response pagination = 2;
+}
+
+message DistributorBlock {
+  string id             = 1;
+  string distributor_id = 2;
+  string initiator_id   = 3; // ID of the user who initiated the block
+  string reason         = 4; // Reason for blocking
+  string status         = 5; // "active", "inactive", "blocked"
+  google.protobuf.Timestamp blocked_at = 6; // Timestamp of last update
+  optional google.protobuf.Timestamp canceled_at = 7; // Timestamp of last update
+}
+
+message DistributorBlocksList {
+  repeated DistributorBlock blocks = 1;
+  pagination.Response pagination = 2;
+}

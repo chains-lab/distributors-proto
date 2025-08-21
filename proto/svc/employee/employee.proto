@@ -1,0 +1,131 @@
+syntax = "proto3";
+package employee;
+
+option go_package = "github.com/chains-lab/distributors-proto/gen/go/employee/employee;city";
+
+import "google/protobuf/empty.proto";
+import "common/pagination/pagination.proto";
+
+service EmployeeService {
+  rpc GetEmployee(GetEmployeeRequest) returns (Employee);
+  rpc GetDistributorEmployee(GetDistributorEmployeeRequest) returns (Employee);
+
+  rpc SelectEmployees(SelectEmployeesRequest) returns (EmployeesList);
+
+  rpc UpdateEmployeeRole(UpdateEmployeeRoleRequest) returns (Employee);
+
+  rpc DeleteEmployee(DeleteEmployeeRequest) returns (google.protobuf.Empty);
+
+  // Invites:
+  rpc SendInvite(SendInviteRequest) returns (Invite);
+
+  rpc GetInvite(GetInviteRequest) returns (Invite);
+  rpc SelectInvites(SelectInvitesRequest) returns (InvitesList);
+
+  rpc WithdrewInvite(WithdrewInviteRequest) returns (Invite);
+  rpc AcceptInvite(AcceptInviteRequest)     returns (Invite);
+  rpc DeclineInvite(DeclineInviteRequest)   returns (Invite);
+}
+
+message GetEmployeeRequest {
+  string id = 1;
+}
+
+message GetDistributorEmployeeRequest {
+  string id = 1;
+  string distributor_id = 2;
+}
+
+message SelectEmployeesRequest {
+  message filter {
+    optional string distributor_id = 1;
+    optional string role = 2;
+  }
+
+  filter filters = 1;
+
+  oneof Sort {
+    bool roles_ascend = 2; // Sort by role in ascending order
+    bool roles_descend= 3; // Sort by role in descending order
+  }
+
+  pagination.Request pagination = 4;
+}
+
+message UpdateEmployeeRoleRequest {
+  string distributor_id = 1; // ID of the distributor
+  string user_id = 2;
+  string role = 3; // New role for the employee
+}
+
+message DeleteEmployeeRequest {
+  string distributor_id = 1; // ID of the distributor
+  string user_id = 2;
+}
+
+message SendInviteRequest {
+  string distributor_id = 1; // ID of the distributor
+  string user_id = 2; // ID of the user to invite
+  string role = 3; // Role of the user in the distributor
+}
+
+message GetInviteRequest {
+  string id = 1; // ID of the invite
+}
+
+message SelectInvitesRequest {
+  message filter {
+    optional string distributor_id = 1; // ID of the distributor
+    optional string user_id = 2; // ID of the user who sent the invite
+    optional string invited_by = 3; // ID of the user who was invited
+    optional string role = 4; // Role of the invite
+    optional string status = 5; // Status of the invite (e.g., "pending
+  }
+
+  filter filters = 1;
+
+  pagination.Request pagination = 2;
+}
+
+message WithdrewInviteRequest {
+  string id = 1; // ID of the invite to withdraw
+}
+
+message AcceptInviteRequest {
+  string id = 1; // ID of the invite to accept
+}
+
+message DeclineInviteRequest {
+  string id = 1; // ID of the invite to decline
+}
+
+// RESPONSES
+
+message Employee {
+  string id = 1; // ID of the employee
+  string name = 2; // Name of the employee
+  string role = 3; // Role of the employee in the distributor
+  string updated_at = 4; // Timestamp of the last update
+  string distributor_id = 5; // ID of the distributor
+}
+
+message EmployeesList {
+  repeated Employee employees = 1; // List of employees
+  pagination.Response pagination = 2; // Pagination information
+}
+
+message Invite {
+  string id = 1; // ID of the invite
+  string distributor_id = 2; // ID of the distributor
+  string user_id = 3; // ID of the user who sent the invite
+  string invited_by = 4; // ID of the user who was invited
+  string role = 5; // Role of the invite
+  string status = 6; // Status of the invite (e.g., "pending", "accepted", "declined")
+  optional string answered_at = 8; // Timestamp of when the invite was answered (if applicable)
+  string created_at = 9; // Timestamp of when the invite was created
+}
+
+message InvitesList {
+  repeated Invite invites = 1; // List of invites
+  pagination.Response pagination = 2; // Pagination information
+}
