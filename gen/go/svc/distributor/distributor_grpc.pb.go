@@ -4,7 +4,7 @@
 // - protoc             v3.21.12
 // source: svc/distributor/distributor.proto
 
-package city
+package distributor
 
 import (
 	context "context"

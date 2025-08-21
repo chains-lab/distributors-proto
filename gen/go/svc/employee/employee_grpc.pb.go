@@ -4,7 +4,7 @@
 // - protoc             v3.21.12
 // source: svc/employee/employee.proto
 
-package city
+package cemployeeity
 
 import (
 	context "context"

@@ -4,7 +4,7 @@
 // 	protoc        v3.21.12
 // source: svc/distributor/distributor.proto
 
-package city
+package distributor
 
 import (
 	pagination "github.com/chains-lab/cities-proto/gen/go/common/pagination"
@@ -1030,7 +1030,7 @@ const file_svc_distributor_distributor_proto_rawDesc = "" +
 	"\x13GetDistributorBlock\x12'.distributor.GetDistributorBlockRequest\x1a\x1d.distributor.DistributorBlock\x12j\n" +
 	"\x17SelectDistributorBlocks\x12+.distributor.SelectDistributorBlocksRequest\x1a\".distributor.DistributorBlocksList\x12W\n" +
 	"\x10BlockDistributor\x12$.distributor.BlockDistributorRequest\x1a\x1d.distributor.DistributorBlock\x12[\n" +
-	"\x12UnblockDistributor\x12&.distributor.UnblockDistributorRequest\x1a\x1d.distributor.DistributorBlockBNZLgithub.com/chains-lab/distributors-proto/gen/go/distributor/distributor;cityb\x06proto3"
+	"\x12UnblockDistributor\x12&.distributor.UnblockDistributorRequest\x1a\x1d.distributor.DistributorBlockBUZSgithub.com/chains-lab/distributors-proto/gen/go/distributor/distributor;distributorb\x06proto3"
 
 var (
 	file_svc_distributor_distributor_proto_rawDescOnce sync.Once
