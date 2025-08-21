@@ -4,7 +4,7 @@
 // 	protoc        v3.21.12
 // source: svc/employee/employee.proto
 
-package cemployeeity
+package employee
 
 import (
 	pagination "github.com/chains-lab/distributors-proto/gen/go/common/pagination"
@@ -1178,7 +1178,7 @@ const file_svc_employee_employee_proto_rawDesc = "" +
 	"\rSelectInvites\x12\x1e.employee.SelectInvitesRequest\x1a\x15.employee.InvitesList\x12C\n" +
 	"\x0eWithdrawInvite\x12\x1f.employee.WithdrawInviteRequest\x1a\x10.employee.Invite\x12?\n" +
 	"\fAcceptInvite\x12\x1d.employee.AcceptInviteRequest\x1a\x10.employee.Invite\x12?\n" +
-	"\fRejectInvite\x12\x1d.employee.RejectInviteRequest\x1a\x10.employee.InviteBPZNgithub.com/chains-lab/distributors-proto/gen/go/employee/employee;cemployeeityb\x06proto3"
+	"\fRejectInvite\x12\x1d.employee.RejectInviteRequest\x1a\x10.employee.InviteBLZJgithub.com/chains-lab/distributors-proto/gen/go/employee/employee;employeeb\x06proto3"
 
 var (
 	file_svc_employee_employee_proto_rawDescOnce sync.Once
