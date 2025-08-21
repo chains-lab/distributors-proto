@@ -4,6 +4,7 @@ package employee;
 option go_package = "github.com/chains-lab/distributors-proto/gen/go/employee/employee;cemployeeity";
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 import "common/pagination/pagination.proto";
 
 service EmployeeService {
@@ -22,17 +23,17 @@ service EmployeeService {
   rpc GetInvite(GetInviteRequest) returns (Invite);
   rpc SelectInvites(SelectInvitesRequest) returns (InvitesList);
 
-  rpc WithdrewInvite(WithdrewInviteRequest) returns (Invite);
+  rpc WithdrawInvite(WithdrawInviteRequest) returns (Invite);
   rpc AcceptInvite(AcceptInviteRequest)     returns (Invite);
-  rpc DeclineInvite(DeclineInviteRequest)   returns (Invite);
+  rpc RejectInvite(RejectInviteRequest)   returns (Invite);
 }
 
 message GetEmployeeRequest {
-  string id = 1;
+  string user_id = 1;
 }
 
 message GetDistributorEmployeeRequest {
-  string id = 1;
+  string user_id = 1;
   string distributor_id = 2;
 }
 
@@ -84,10 +85,15 @@ message SelectInvitesRequest {
 
   filter filters = 1;
 
-  pagination.Request pagination = 2;
+  oneof Sort {
+    bool send_at_ascend = 2; // Sort by sent_at in ascending order
+    bool send_at_descend = 3; // Sort by sent_at in descending order
+  }
+
+  pagination.Request pagination = 4;
 }
 
-message WithdrewInviteRequest {
+message WithdrawInviteRequest {
   string id = 1; // ID of the invite to withdraw
 }
 
@@ -95,18 +101,18 @@ message AcceptInviteRequest {
   string id = 1; // ID of the invite to accept
 }
 
-message DeclineInviteRequest {
+message RejectInviteRequest {
   string id = 1; // ID of the invite to decline
 }
 
 // RESPONSES
 
 message Employee {
-  string id = 1; // ID of the employee
-  string name = 2; // Name of the employee
+  string user_id = 1; // ID of the employee
+  string distributor_id = 2; // ID of the distributor
   string role = 3; // Role of the employee in the distributor
-  string updated_at = 4; // Timestamp of the last update
-  string distributor_id = 5; // ID of the distributor
+  google.protobuf.Timestamp updated_at = 4; // Timestamp of the last update
+  google.protobuf.Timestamp created_at = 5; // Timestamp of when the employee was created
 }
 
 message EmployeesList {
@@ -121,8 +127,8 @@ message Invite {
   string invited_by = 4; // ID of the user who was invited
   string role = 5; // Role of the invite
   string status = 6; // Status of the invite (e.g., "pending", "accepted", "declined")
-  optional string answered_at = 8; // Timestamp of when the invite was answered (if applicable)
-  string created_at = 9; // Timestamp of when the invite was created
+  optional google.protobuf.Timestamp answered_at = 8; // Timestamp of when the invite was answered (if applicable)
+  google.protobuf.Timestamp created_at = 9; // Timestamp of when the invite was created
 }
 
 message InvitesList {

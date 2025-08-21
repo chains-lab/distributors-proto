@@ -38,7 +38,7 @@ const (
 type DistributorServiceClient interface {
 	CreateDistributor(ctx context.Context, in *CreateDistributorRequest, opts ...grpc.CallOption) (*Distributor, error)
 	GetDistributor(ctx context.Context, in *GetDistributorRequest, opts ...grpc.CallOption) (*Distributor, error)
-	SelectDistributors(ctx context.Context, in *SelectDistributorsRequest, opts ...grpc.CallOption) (*DistributorList, error)
+	SelectDistributors(ctx context.Context, in *SelectDistributorsRequest, opts ...grpc.CallOption) (*DistributorsList, error)
 	UpdateDistributorName(ctx context.Context, in *UpdateDistributorNameRequest, opts ...grpc.CallOption) (*Distributor, error)
 	UpdateDistributorIcon(ctx context.Context, in *UpdateDistributorIconRequest, opts ...grpc.CallOption) (*Distributor, error)
 	SetDistributorStatusInactive(ctx context.Context, in *SetDistributorStatusInactiveRequest, opts ...grpc.CallOption) (*Distributor, error)
@@ -78,9 +78,9 @@ func (c *distributorServiceClient) GetDistributor(ctx context.Context, in *GetDi
 	return out, nil
 }
 
-func (c *distributorServiceClient) SelectDistributors(ctx context.Context, in *SelectDistributorsRequest, opts ...grpc.CallOption) (*DistributorList, error) {
+func (c *distributorServiceClient) SelectDistributors(ctx context.Context, in *SelectDistributorsRequest, opts ...grpc.CallOption) (*DistributorsList, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DistributorList)
+	out := new(DistributorsList)
 	err := c.cc.Invoke(ctx, DistributorService_SelectDistributors_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -174,7 +174,7 @@ func (c *distributorServiceClient) UnblockDistributor(ctx context.Context, in *U
 type DistributorServiceServer interface {
 	CreateDistributor(context.Context, *CreateDistributorRequest) (*Distributor, error)
 	GetDistributor(context.Context, *GetDistributorRequest) (*Distributor, error)
-	SelectDistributors(context.Context, *SelectDistributorsRequest) (*DistributorList, error)
+	SelectDistributors(context.Context, *SelectDistributorsRequest) (*DistributorsList, error)
 	UpdateDistributorName(context.Context, *UpdateDistributorNameRequest) (*Distributor, error)
 	UpdateDistributorIcon(context.Context, *UpdateDistributorIconRequest) (*Distributor, error)
 	SetDistributorStatusInactive(context.Context, *SetDistributorStatusInactiveRequest) (*Distributor, error)
@@ -200,7 +200,7 @@ func (UnimplementedDistributorServiceServer) CreateDistributor(context.Context, 
 func (UnimplementedDistributorServiceServer) GetDistributor(context.Context, *GetDistributorRequest) (*Distributor, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDistributor not implemented")
 }
-func (UnimplementedDistributorServiceServer) SelectDistributors(context.Context, *SelectDistributorsRequest) (*DistributorList, error) {
+func (UnimplementedDistributorServiceServer) SelectDistributors(context.Context, *SelectDistributorsRequest) (*DistributorsList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SelectDistributors not implemented")
 }
 func (UnimplementedDistributorServiceServer) UpdateDistributorName(context.Context, *UpdateDistributorNameRequest) (*Distributor, error) {

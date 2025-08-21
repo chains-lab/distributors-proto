@@ -28,7 +28,7 @@ const (
 	EmployeeService_SendInvite_FullMethodName             = "/employee.EmployeeService/SendInvite"
 	EmployeeService_GetInvite_FullMethodName              = "/employee.EmployeeService/GetInvite"
 	EmployeeService_SelectInvites_FullMethodName          = "/employee.EmployeeService/SelectInvites"
-	EmployeeService_WithdrewInvite_FullMethodName         = "/employee.EmployeeService/WithdrewInvite"
+	EmployeeService_WithdrawInvite_FullMethodName         = "/employee.EmployeeService/WithdrawInvite"
 	EmployeeService_AcceptInvite_FullMethodName           = "/employee.EmployeeService/AcceptInvite"
 	EmployeeService_DeclineInvite_FullMethodName          = "/employee.EmployeeService/DeclineInvite"
 )
@@ -46,7 +46,7 @@ type EmployeeServiceClient interface {
 	SendInvite(ctx context.Context, in *SendInviteRequest, opts ...grpc.CallOption) (*Invite, error)
 	GetInvite(ctx context.Context, in *GetInviteRequest, opts ...grpc.CallOption) (*Invite, error)
 	SelectInvites(ctx context.Context, in *SelectInvitesRequest, opts ...grpc.CallOption) (*InvitesList, error)
-	WithdrewInvite(ctx context.Context, in *WithdrewInviteRequest, opts ...grpc.CallOption) (*Invite, error)
+	WithdrawInvite(ctx context.Context, in *WithdrawInviteRequest, opts ...grpc.CallOption) (*Invite, error)
 	AcceptInvite(ctx context.Context, in *AcceptInviteRequest, opts ...grpc.CallOption) (*Invite, error)
 	DeclineInvite(ctx context.Context, in *DeclineInviteRequest, opts ...grpc.CallOption) (*Invite, error)
 }
@@ -139,10 +139,10 @@ func (c *employeeServiceClient) SelectInvites(ctx context.Context, in *SelectInv
 	return out, nil
 }
 
-func (c *employeeServiceClient) WithdrewInvite(ctx context.Context, in *WithdrewInviteRequest, opts ...grpc.CallOption) (*Invite, error) {
+func (c *employeeServiceClient) WithdrawInvite(ctx context.Context, in *WithdrawInviteRequest, opts ...grpc.CallOption) (*Invite, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Invite)
-	err := c.cc.Invoke(ctx, EmployeeService_WithdrewInvite_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, EmployeeService_WithdrawInvite_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -182,7 +182,7 @@ type EmployeeServiceServer interface {
 	SendInvite(context.Context, *SendInviteRequest) (*Invite, error)
 	GetInvite(context.Context, *GetInviteRequest) (*Invite, error)
 	SelectInvites(context.Context, *SelectInvitesRequest) (*InvitesList, error)
-	WithdrewInvite(context.Context, *WithdrewInviteRequest) (*Invite, error)
+	WithdrawInvite(context.Context, *WithdrawInviteRequest) (*Invite, error)
 	AcceptInvite(context.Context, *AcceptInviteRequest) (*Invite, error)
 	DeclineInvite(context.Context, *DeclineInviteRequest) (*Invite, error)
 	mustEmbedUnimplementedEmployeeServiceServer()
@@ -219,8 +219,8 @@ func (UnimplementedEmployeeServiceServer) GetInvite(context.Context, *GetInviteR
 func (UnimplementedEmployeeServiceServer) SelectInvites(context.Context, *SelectInvitesRequest) (*InvitesList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SelectInvites not implemented")
 }
-func (UnimplementedEmployeeServiceServer) WithdrewInvite(context.Context, *WithdrewInviteRequest) (*Invite, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method WithdrewInvite not implemented")
+func (UnimplementedEmployeeServiceServer) WithdrawInvite(context.Context, *WithdrawInviteRequest) (*Invite, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WithdrawInvite not implemented")
 }
 func (UnimplementedEmployeeServiceServer) AcceptInvite(context.Context, *AcceptInviteRequest) (*Invite, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AcceptInvite not implemented")
@@ -393,20 +393,20 @@ func _EmployeeService_SelectInvites_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _EmployeeService_WithdrewInvite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WithdrewInviteRequest)
+func _EmployeeService_WithdrawInvite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WithdrawInviteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EmployeeServiceServer).WithdrewInvite(ctx, in)
+		return srv.(EmployeeServiceServer).WithdrawInvite(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: EmployeeService_WithdrewInvite_FullMethodName,
+		FullMethod: EmployeeService_WithdrawInvite_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EmployeeServiceServer).WithdrewInvite(ctx, req.(*WithdrewInviteRequest))
+		return srv.(EmployeeServiceServer).WithdrawInvite(ctx, req.(*WithdrawInviteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -487,8 +487,8 @@ var EmployeeService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _EmployeeService_SelectInvites_Handler,
 		},
 		{
-			MethodName: "WithdrewInvite",
-			Handler:    _EmployeeService_WithdrewInvite_Handler,
+			MethodName: "WithdrawInvite",
+			Handler:    _EmployeeService_WithdrawInvite_Handler,
 		},
 		{
 			MethodName: "AcceptInvite",

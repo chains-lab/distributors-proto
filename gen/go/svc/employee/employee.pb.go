@@ -7,10 +7,11 @@
 package cemployeeity
 
 import (
-	pagination "github.com/chains-lab/cities-proto/gen/go/common/pagination"
+	pagination "github.com/chains-lab/distributors-proto/gen/go/common/pagination"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -25,7 +26,7 @@ const (
 
 type GetEmployeeRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -60,16 +61,16 @@ func (*GetEmployeeRequest) Descriptor() ([]byte, []int) {
 	return file_svc_employee_employee_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GetEmployeeRequest) GetId() string {
+func (x *GetEmployeeRequest) GetUserId() string {
 	if x != nil {
-		return x.Id
+		return x.UserId
 	}
 	return ""
 }
 
 type GetDistributorEmployeeRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	DistributorId string                 `protobuf:"bytes,2,opt,name=distributor_id,json=distributorId,proto3" json:"distributor_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -105,9 +106,9 @@ func (*GetDistributorEmployeeRequest) Descriptor() ([]byte, []int) {
 	return file_svc_employee_employee_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetDistributorEmployeeRequest) GetId() string {
+func (x *GetDistributorEmployeeRequest) GetUserId() string {
 	if x != nil {
-		return x.Id
+		return x.UserId
 	}
 	return ""
 }
@@ -434,9 +435,14 @@ func (x *GetInviteRequest) GetId() string {
 }
 
 type SelectInvitesRequest struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	Filters       *SelectInvitesRequestFilter `protobuf:"bytes,1,opt,name=filters,proto3" json:"filters,omitempty"`
-	Pagination    *pagination.Request         `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	state   protoimpl.MessageState      `protogen:"open.v1"`
+	Filters *SelectInvitesRequestFilter `protobuf:"bytes,1,opt,name=filters,proto3" json:"filters,omitempty"`
+	// Types that are valid to be assigned to Sort:
+	//
+	//	*SelectInvitesRequest_SendAtAscend
+	//	*SelectInvitesRequest_SendAtDescend
+	Sort          isSelectInvitesRequest_Sort `protobuf_oneof:"Sort"`
+	Pagination    *pagination.Request         `protobuf:"bytes,4,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -478,6 +484,31 @@ func (x *SelectInvitesRequest) GetFilters() *SelectInvitesRequestFilter {
 	return nil
 }
 
+func (x *SelectInvitesRequest) GetSort() isSelectInvitesRequest_Sort {
+	if x != nil {
+		return x.Sort
+	}
+	return nil
+}
+
+func (x *SelectInvitesRequest) GetSendAtAscend() bool {
+	if x != nil {
+		if x, ok := x.Sort.(*SelectInvitesRequest_SendAtAscend); ok {
+			return x.SendAtAscend
+		}
+	}
+	return false
+}
+
+func (x *SelectInvitesRequest) GetSendAtDescend() bool {
+	if x != nil {
+		if x, ok := x.Sort.(*SelectInvitesRequest_SendAtDescend); ok {
+			return x.SendAtDescend
+		}
+	}
+	return false
+}
+
 func (x *SelectInvitesRequest) GetPagination() *pagination.Request {
 	if x != nil {
 		return x.Pagination
@@ -485,27 +516,43 @@ func (x *SelectInvitesRequest) GetPagination() *pagination.Request {
 	return nil
 }
 
-type WithdrewInviteRequest struct {
+type isSelectInvitesRequest_Sort interface {
+	isSelectInvitesRequest_Sort()
+}
+
+type SelectInvitesRequest_SendAtAscend struct {
+	SendAtAscend bool `protobuf:"varint,2,opt,name=send_at_ascend,json=sendAtAscend,proto3,oneof"` // Sort by sent_at in ascending order
+}
+
+type SelectInvitesRequest_SendAtDescend struct {
+	SendAtDescend bool `protobuf:"varint,3,opt,name=send_at_descend,json=sendAtDescend,proto3,oneof"` // Sort by sent_at in descending order
+}
+
+func (*SelectInvitesRequest_SendAtAscend) isSelectInvitesRequest_Sort() {}
+
+func (*SelectInvitesRequest_SendAtDescend) isSelectInvitesRequest_Sort() {}
+
+type WithdrawInviteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // ID of the invite to withdraw
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *WithdrewInviteRequest) Reset() {
-	*x = WithdrewInviteRequest{}
+func (x *WithdrawInviteRequest) Reset() {
+	*x = WithdrawInviteRequest{}
 	mi := &file_svc_employee_employee_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *WithdrewInviteRequest) String() string {
+func (x *WithdrawInviteRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*WithdrewInviteRequest) ProtoMessage() {}
+func (*WithdrawInviteRequest) ProtoMessage() {}
 
-func (x *WithdrewInviteRequest) ProtoReflect() protoreflect.Message {
+func (x *WithdrawInviteRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_svc_employee_employee_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -517,12 +564,12 @@ func (x *WithdrewInviteRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use WithdrewInviteRequest.ProtoReflect.Descriptor instead.
-func (*WithdrewInviteRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use WithdrawInviteRequest.ProtoReflect.Descriptor instead.
+func (*WithdrawInviteRequest) Descriptor() ([]byte, []int) {
 	return file_svc_employee_employee_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *WithdrewInviteRequest) GetId() string {
+func (x *WithdrawInviteRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
@@ -619,11 +666,11 @@ func (x *DeclineInviteRequest) GetId() string {
 
 type Employee struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                            // ID of the employee
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                        // Name of the employee
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                      // ID of the employee
+	DistributorId string                 `protobuf:"bytes,2,opt,name=distributor_id,json=distributorId,proto3" json:"distributor_id,omitempty"` // ID of the distributor
 	Role          string                 `protobuf:"bytes,3,opt,name=role,proto3" json:"role,omitempty"`                                        // Role of the employee in the distributor
-	UpdatedAt     string                 `protobuf:"bytes,4,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`             // Timestamp of the last update
-	DistributorId string                 `protobuf:"bytes,5,opt,name=distributor_id,json=distributorId,proto3" json:"distributor_id,omitempty"` // ID of the distributor
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`             // Timestamp of the last update
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`             // Timestamp of when the employee was created
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -658,16 +705,16 @@ func (*Employee) Descriptor() ([]byte, []int) {
 	return file_svc_employee_employee_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *Employee) GetId() string {
+func (x *Employee) GetUserId() string {
 	if x != nil {
-		return x.Id
+		return x.UserId
 	}
 	return ""
 }
 
-func (x *Employee) GetName() string {
+func (x *Employee) GetDistributorId() string {
 	if x != nil {
-		return x.Name
+		return x.DistributorId
 	}
 	return ""
 }
@@ -679,18 +726,18 @@ func (x *Employee) GetRole() string {
 	return ""
 }
 
-func (x *Employee) GetUpdatedAt() string {
+func (x *Employee) GetUpdatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdatedAt
 	}
-	return ""
+	return nil
 }
 
-func (x *Employee) GetDistributorId() string {
+func (x *Employee) GetCreatedAt() *timestamppb.Timestamp {
 	if x != nil {
-		return x.DistributorId
+		return x.CreatedAt
 	}
-	return ""
+	return nil
 }
 
 type EmployeesList struct {
@@ -753,8 +800,8 @@ type Invite struct {
 	InvitedBy     string                 `protobuf:"bytes,4,opt,name=invited_by,json=invitedBy,proto3" json:"invited_by,omitempty"`             // ID of the user who was invited
 	Role          string                 `protobuf:"bytes,5,opt,name=role,proto3" json:"role,omitempty"`                                        // Role of the invite
 	Status        string                 `protobuf:"bytes,6,opt,name=status,proto3" json:"status,omitempty"`                                    // Status of the invite (e.g., "pending", "accepted", "declined")
-	AnsweredAt    *string                `protobuf:"bytes,8,opt,name=answered_at,json=answeredAt,proto3,oneof" json:"answered_at,omitempty"`    // Timestamp of when the invite was answered (if applicable)
-	CreatedAt     string                 `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`             // Timestamp of when the invite was created
+	AnsweredAt    *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=answered_at,json=answeredAt,proto3,oneof" json:"answered_at,omitempty"`    // Timestamp of when the invite was answered (if applicable)
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`             // Timestamp of when the invite was created
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -831,18 +878,18 @@ func (x *Invite) GetStatus() string {
 	return ""
 }
 
-func (x *Invite) GetAnsweredAt() string {
-	if x != nil && x.AnsweredAt != nil {
-		return *x.AnsweredAt
+func (x *Invite) GetAnsweredAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.AnsweredAt
 	}
-	return ""
+	return nil
 }
 
-func (x *Invite) GetCreatedAt() string {
+func (x *Invite) GetCreatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreatedAt
 	}
-	return ""
+	return nil
 }
 
 type InvitesList struct {
@@ -1029,11 +1076,11 @@ var File_svc_employee_employee_proto protoreflect.FileDescriptor
 
 const file_svc_employee_employee_proto_rawDesc = "" +
 	"\n" +
-	"\x1bsvc/employee/employee.proto\x12\bemployee\x1a\x1bgoogle/protobuf/empty.proto\x1a\"common/pagination/pagination.proto\"$\n" +
-	"\x12GetEmployeeRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"V\n" +
-	"\x1dGetDistributorEmployeeRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12%\n" +
+	"\x1bsvc/employee/employee.proto\x12\bemployee\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\"common/pagination/pagination.proto\"-\n" +
+	"\x12GetEmployeeRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"_\n" +
+	"\x1dGetDistributorEmployeeRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12%\n" +
 	"\x0edistributor_id\x18\x02 \x01(\tR\rdistributorId\"\xcf\x02\n" +
 	"\x16SelectEmployeesRequest\x12A\n" +
 	"\afilters\x18\x01 \x01(\v2'.employee.SelectEmployeesRequest.filterR\afilters\x12#\n" +
@@ -1060,11 +1107,13 @@ const file_svc_employee_employee_proto_rawDesc = "" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x12\n" +
 	"\x04role\x18\x03 \x01(\tR\x04role\"\"\n" +
 	"\x10GetInviteRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\xfd\x02\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\xd7\x03\n" +
 	"\x14SelectInvitesRequest\x12?\n" +
-	"\afilters\x18\x01 \x01(\v2%.employee.SelectInvitesRequest.filterR\afilters\x123\n" +
+	"\afilters\x18\x01 \x01(\v2%.employee.SelectInvitesRequest.filterR\afilters\x12&\n" +
+	"\x0esend_at_ascend\x18\x02 \x01(\bH\x00R\fsendAtAscend\x12(\n" +
+	"\x0fsend_at_descend\x18\x03 \x01(\bH\x00R\rsendAtDescend\x123\n" +
 	"\n" +
-	"pagination\x18\x02 \x01(\v2\x13.pagination.RequestR\n" +
+	"pagination\x18\x04 \x01(\v2\x13.pagination.RequestR\n" +
 	"pagination\x1a\xee\x01\n" +
 	"\x06filter\x12*\n" +
 	"\x0edistributor_id\x18\x01 \x01(\tH\x00R\rdistributorId\x88\x01\x01\x12\x1c\n" +
@@ -1078,25 +1127,27 @@ const file_svc_employee_employee_proto_rawDesc = "" +
 	"\b_user_idB\r\n" +
 	"\v_invited_byB\a\n" +
 	"\x05_roleB\t\n" +
-	"\a_status\"'\n" +
-	"\x15WithdrewInviteRequest\x12\x0e\n" +
+	"\a_statusB\x06\n" +
+	"\x04Sort\"'\n" +
+	"\x15WithdrawInviteRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"%\n" +
 	"\x13AcceptInviteRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"&\n" +
 	"\x14DeclineInviteRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\x88\x01\n" +
-	"\bEmployee\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
-	"\x04role\x18\x03 \x01(\tR\x04role\x12\x1d\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\xd4\x01\n" +
+	"\bEmployee\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12%\n" +
+	"\x0edistributor_id\x18\x02 \x01(\tR\rdistributorId\x12\x12\n" +
+	"\x04role\x18\x03 \x01(\tR\x04role\x129\n" +
 	"\n" +
-	"updated_at\x18\x04 \x01(\tR\tupdatedAt\x12%\n" +
-	"\x0edistributor_id\x18\x05 \x01(\tR\rdistributorId\"w\n" +
+	"updated_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x129\n" +
+	"\n" +
+	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"w\n" +
 	"\rEmployeesList\x120\n" +
 	"\temployees\x18\x01 \x03(\v2\x12.employee.EmployeeR\temployees\x124\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x14.pagination.ResponseR\n" +
-	"pagination\"\xf8\x01\n" +
+	"pagination\"\xb0\x02\n" +
 	"\x06Invite\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12%\n" +
 	"\x0edistributor_id\x18\x02 \x01(\tR\rdistributorId\x12\x17\n" +
@@ -1104,11 +1155,11 @@ const file_svc_employee_employee_proto_rawDesc = "" +
 	"\n" +
 	"invited_by\x18\x04 \x01(\tR\tinvitedBy\x12\x12\n" +
 	"\x04role\x18\x05 \x01(\tR\x04role\x12\x16\n" +
-	"\x06status\x18\x06 \x01(\tR\x06status\x12$\n" +
-	"\vanswered_at\x18\b \x01(\tH\x00R\n" +
-	"answeredAt\x88\x01\x01\x12\x1d\n" +
+	"\x06status\x18\x06 \x01(\tR\x06status\x12@\n" +
+	"\vanswered_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampH\x00R\n" +
+	"answeredAt\x88\x01\x01\x129\n" +
 	"\n" +
-	"created_at\x18\t \x01(\tR\tcreatedAtB\x0e\n" +
+	"created_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAtB\x0e\n" +
 	"\f_answered_at\"o\n" +
 	"\vInvitesList\x12*\n" +
 	"\ainvites\x18\x01 \x03(\v2\x10.employee.InviteR\ainvites\x124\n" +
@@ -1125,7 +1176,7 @@ const file_svc_employee_employee_proto_rawDesc = "" +
 	"SendInvite\x12\x1b.employee.SendInviteRequest\x1a\x10.employee.Invite\x129\n" +
 	"\tGetInvite\x12\x1a.employee.GetInviteRequest\x1a\x10.employee.Invite\x12F\n" +
 	"\rSelectInvites\x12\x1e.employee.SelectInvitesRequest\x1a\x15.employee.InvitesList\x12C\n" +
-	"\x0eWithdrewInvite\x12\x1f.employee.WithdrewInviteRequest\x1a\x10.employee.Invite\x12?\n" +
+	"\x0eWithdrawInvite\x12\x1f.employee.WithdrawInviteRequest\x1a\x10.employee.Invite\x12?\n" +
 	"\fAcceptInvite\x12\x1d.employee.AcceptInviteRequest\x1a\x10.employee.Invite\x12A\n" +
 	"\rDeclineInvite\x12\x1e.employee.DeclineInviteRequest\x1a\x10.employee.InviteBPZNgithub.com/chains-lab/distributors-proto/gen/go/employee/employee;cemployeeityb\x06proto3"
 
@@ -1151,7 +1202,7 @@ var file_svc_employee_employee_proto_goTypes = []any{
 	(*SendInviteRequest)(nil),             // 5: employee.SendInviteRequest
 	(*GetInviteRequest)(nil),              // 6: employee.GetInviteRequest
 	(*SelectInvitesRequest)(nil),          // 7: employee.SelectInvitesRequest
-	(*WithdrewInviteRequest)(nil),         // 8: employee.WithdrewInviteRequest
+	(*WithdrawInviteRequest)(nil),         // 8: employee.WithdrawInviteRequest
 	(*AcceptInviteRequest)(nil),           // 9: employee.AcceptInviteRequest
 	(*DeclineInviteRequest)(nil),          // 10: employee.DeclineInviteRequest
 	(*Employee)(nil),                      // 11: employee.Employee
@@ -1161,45 +1212,50 @@ var file_svc_employee_employee_proto_goTypes = []any{
 	(*SelectEmployeesRequestFilter)(nil),  // 15: employee.SelectEmployeesRequest.filter
 	(*SelectInvitesRequestFilter)(nil),    // 16: employee.SelectInvitesRequest.filter
 	(*pagination.Request)(nil),            // 17: pagination.Request
-	(*pagination.Response)(nil),           // 18: pagination.Response
-	(*emptypb.Empty)(nil),                 // 19: google.protobuf.Empty
+	(*timestamppb.Timestamp)(nil),         // 18: google.protobuf.Timestamp
+	(*pagination.Response)(nil),           // 19: pagination.Response
+	(*emptypb.Empty)(nil),                 // 20: google.protobuf.Empty
 }
 var file_svc_employee_employee_proto_depIdxs = []int32{
 	15, // 0: employee.SelectEmployeesRequest.filters:type_name -> employee.SelectEmployeesRequest.filter
 	17, // 1: employee.SelectEmployeesRequest.pagination:type_name -> pagination.Request
 	16, // 2: employee.SelectInvitesRequest.filters:type_name -> employee.SelectInvitesRequest.filter
 	17, // 3: employee.SelectInvitesRequest.pagination:type_name -> pagination.Request
-	11, // 4: employee.EmployeesList.employees:type_name -> employee.Employee
-	18, // 5: employee.EmployeesList.pagination:type_name -> pagination.Response
-	13, // 6: employee.InvitesList.invites:type_name -> employee.Invite
-	18, // 7: employee.InvitesList.pagination:type_name -> pagination.Response
-	0,  // 8: employee.EmployeeService.GetEmployee:input_type -> employee.GetEmployeeRequest
-	1,  // 9: employee.EmployeeService.GetDistributorEmployee:input_type -> employee.GetDistributorEmployeeRequest
-	2,  // 10: employee.EmployeeService.SelectEmployees:input_type -> employee.SelectEmployeesRequest
-	3,  // 11: employee.EmployeeService.UpdateEmployeeRole:input_type -> employee.UpdateEmployeeRoleRequest
-	4,  // 12: employee.EmployeeService.DeleteEmployee:input_type -> employee.DeleteEmployeeRequest
-	5,  // 13: employee.EmployeeService.SendInvite:input_type -> employee.SendInviteRequest
-	6,  // 14: employee.EmployeeService.GetInvite:input_type -> employee.GetInviteRequest
-	7,  // 15: employee.EmployeeService.SelectInvites:input_type -> employee.SelectInvitesRequest
-	8,  // 16: employee.EmployeeService.WithdrewInvite:input_type -> employee.WithdrewInviteRequest
-	9,  // 17: employee.EmployeeService.AcceptInvite:input_type -> employee.AcceptInviteRequest
-	10, // 18: employee.EmployeeService.DeclineInvite:input_type -> employee.DeclineInviteRequest
-	11, // 19: employee.EmployeeService.GetEmployee:output_type -> employee.Employee
-	11, // 20: employee.EmployeeService.GetDistributorEmployee:output_type -> employee.Employee
-	12, // 21: employee.EmployeeService.SelectEmployees:output_type -> employee.EmployeesList
-	11, // 22: employee.EmployeeService.UpdateEmployeeRole:output_type -> employee.Employee
-	19, // 23: employee.EmployeeService.DeleteEmployee:output_type -> google.protobuf.Empty
-	13, // 24: employee.EmployeeService.SendInvite:output_type -> employee.Invite
-	13, // 25: employee.EmployeeService.GetInvite:output_type -> employee.Invite
-	14, // 26: employee.EmployeeService.SelectInvites:output_type -> employee.InvitesList
-	13, // 27: employee.EmployeeService.WithdrewInvite:output_type -> employee.Invite
-	13, // 28: employee.EmployeeService.AcceptInvite:output_type -> employee.Invite
-	13, // 29: employee.EmployeeService.DeclineInvite:output_type -> employee.Invite
-	19, // [19:30] is the sub-list for method output_type
-	8,  // [8:19] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	18, // 4: employee.Employee.updated_at:type_name -> google.protobuf.Timestamp
+	18, // 5: employee.Employee.created_at:type_name -> google.protobuf.Timestamp
+	11, // 6: employee.EmployeesList.employees:type_name -> employee.Employee
+	19, // 7: employee.EmployeesList.pagination:type_name -> pagination.Response
+	18, // 8: employee.Invite.answered_at:type_name -> google.protobuf.Timestamp
+	18, // 9: employee.Invite.created_at:type_name -> google.protobuf.Timestamp
+	13, // 10: employee.InvitesList.invites:type_name -> employee.Invite
+	19, // 11: employee.InvitesList.pagination:type_name -> pagination.Response
+	0,  // 12: employee.EmployeeService.GetEmployee:input_type -> employee.GetEmployeeRequest
+	1,  // 13: employee.EmployeeService.GetDistributorEmployee:input_type -> employee.GetDistributorEmployeeRequest
+	2,  // 14: employee.EmployeeService.SelectEmployees:input_type -> employee.SelectEmployeesRequest
+	3,  // 15: employee.EmployeeService.UpdateEmployeeRole:input_type -> employee.UpdateEmployeeRoleRequest
+	4,  // 16: employee.EmployeeService.DeleteEmployee:input_type -> employee.DeleteEmployeeRequest
+	5,  // 17: employee.EmployeeService.SendInvite:input_type -> employee.SendInviteRequest
+	6,  // 18: employee.EmployeeService.GetInvite:input_type -> employee.GetInviteRequest
+	7,  // 19: employee.EmployeeService.SelectInvites:input_type -> employee.SelectInvitesRequest
+	8,  // 20: employee.EmployeeService.WithdrawInvite:input_type -> employee.WithdrawInviteRequest
+	9,  // 21: employee.EmployeeService.AcceptInvite:input_type -> employee.AcceptInviteRequest
+	10, // 22: employee.EmployeeService.DeclineInvite:input_type -> employee.DeclineInviteRequest
+	11, // 23: employee.EmployeeService.GetEmployee:output_type -> employee.Employee
+	11, // 24: employee.EmployeeService.GetDistributorEmployee:output_type -> employee.Employee
+	12, // 25: employee.EmployeeService.SelectEmployees:output_type -> employee.EmployeesList
+	11, // 26: employee.EmployeeService.UpdateEmployeeRole:output_type -> employee.Employee
+	20, // 27: employee.EmployeeService.DeleteEmployee:output_type -> google.protobuf.Empty
+	13, // 28: employee.EmployeeService.SendInvite:output_type -> employee.Invite
+	13, // 29: employee.EmployeeService.GetInvite:output_type -> employee.Invite
+	14, // 30: employee.EmployeeService.SelectInvites:output_type -> employee.InvitesList
+	13, // 31: employee.EmployeeService.WithdrawInvite:output_type -> employee.Invite
+	13, // 32: employee.EmployeeService.AcceptInvite:output_type -> employee.Invite
+	13, // 33: employee.EmployeeService.DeclineInvite:output_type -> employee.Invite
+	23, // [23:34] is the sub-list for method output_type
+	12, // [12:23] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_svc_employee_employee_proto_init() }
@@ -1210,6 +1266,10 @@ func file_svc_employee_employee_proto_init() {
 	file_svc_employee_employee_proto_msgTypes[2].OneofWrappers = []any{
 		(*SelectEmployeesRequest_RolesAscend)(nil),
 		(*SelectEmployeesRequest_RolesDescend)(nil),
+	}
+	file_svc_employee_employee_proto_msgTypes[7].OneofWrappers = []any{
+		(*SelectInvitesRequest_SendAtAscend)(nil),
+		(*SelectInvitesRequest_SendAtDescend)(nil),
 	}
 	file_svc_employee_employee_proto_msgTypes[13].OneofWrappers = []any{}
 	file_svc_employee_employee_proto_msgTypes[15].OneofWrappers = []any{}

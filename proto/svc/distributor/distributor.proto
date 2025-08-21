@@ -11,7 +11,7 @@ service DistributorService {
   rpc CreateDistributor(CreateDistributorRequest) returns (Distributor);
 
   rpc GetDistributor(GetDistributorRequest) returns (Distributor);
-  rpc SelectDistributors(SelectDistributorsRequest) returns (DistributorList);
+  rpc SelectDistributors(SelectDistributorsRequest) returns (DistributorsList);
 
   rpc UpdateDistributorName(UpdateDistributorNameRequest) returns (Distributor);
   rpc UpdateDistributorIcon(UpdateDistributorIconRequest) returns (Distributor);
@@ -100,7 +100,7 @@ message Distributor {
   google.protobuf.Timestamp created_at = 6; // Timestamp of creation
 }
 
-message DistributorList {
+message DistributorsList {
   repeated Distributor distributors = 1;
   pagination.Response pagination = 2;
 }

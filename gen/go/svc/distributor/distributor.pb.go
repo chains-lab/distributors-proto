@@ -7,7 +7,7 @@
 package distributor
 
 import (
-	pagination "github.com/chains-lab/cities-proto/gen/go/common/pagination"
+	pagination "github.com/chains-lab/distributors-proto/gen/go/common/pagination"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/known/emptypb"
@@ -632,7 +632,7 @@ func (x *Distributor) GetCreatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-type DistributorList struct {
+type DistributorsList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Distributors  []*Distributor         `protobuf:"bytes,1,rep,name=distributors,proto3" json:"distributors,omitempty"`
 	Pagination    *pagination.Response   `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
@@ -640,20 +640,20 @@ type DistributorList struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DistributorList) Reset() {
-	*x = DistributorList{}
+func (x *DistributorsList) Reset() {
+	*x = DistributorsList{}
 	mi := &file_svc_distributor_distributor_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DistributorList) String() string {
+func (x *DistributorsList) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DistributorList) ProtoMessage() {}
+func (*DistributorsList) ProtoMessage() {}
 
-func (x *DistributorList) ProtoReflect() protoreflect.Message {
+func (x *DistributorsList) ProtoReflect() protoreflect.Message {
 	mi := &file_svc_distributor_distributor_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -665,19 +665,19 @@ func (x *DistributorList) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DistributorList.ProtoReflect.Descriptor instead.
-func (*DistributorList) Descriptor() ([]byte, []int) {
+// Deprecated: Use DistributorsList.ProtoReflect.Descriptor instead.
+func (*DistributorsList) Descriptor() ([]byte, []int) {
 	return file_svc_distributor_distributor_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *DistributorList) GetDistributors() []*Distributor {
+func (x *DistributorsList) GetDistributors() []*Distributor {
 	if x != nil {
 		return x.Distributors
 	}
 	return nil
 }
 
-func (x *DistributorList) GetPagination() *pagination.Response {
+func (x *DistributorsList) GetPagination() *pagination.Response {
 	if x != nil {
 		return x.Pagination
 	}
@@ -997,8 +997,8 @@ const file_svc_distributor_distributor_proto_rawDesc = "" +
 	"\n" +
 	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x129\n" +
 	"\n" +
-	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\x85\x01\n" +
-	"\x0fDistributorList\x12<\n" +
+	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\x86\x01\n" +
+	"\x10DistributorsList\x12<\n" +
 	"\fdistributors\x18\x01 \x03(\v2\x18.distributor.DistributorR\fdistributors\x124\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x14.pagination.ResponseR\n" +
@@ -1018,11 +1018,11 @@ const file_svc_distributor_distributor_proto_rawDesc = "" +
 	"\x06blocks\x18\x01 \x03(\v2\x1d.distributor.DistributorBlockR\x06blocks\x124\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x14.pagination.ResponseR\n" +
-	"pagination2\xa7\b\n" +
+	"pagination2\xa8\b\n" +
 	"\x12DistributorService\x12T\n" +
 	"\x11CreateDistributor\x12%.distributor.CreateDistributorRequest\x1a\x18.distributor.Distributor\x12N\n" +
-	"\x0eGetDistributor\x12\".distributor.GetDistributorRequest\x1a\x18.distributor.Distributor\x12Z\n" +
-	"\x12SelectDistributors\x12&.distributor.SelectDistributorsRequest\x1a\x1c.distributor.DistributorList\x12\\\n" +
+	"\x0eGetDistributor\x12\".distributor.GetDistributorRequest\x1a\x18.distributor.Distributor\x12[\n" +
+	"\x12SelectDistributors\x12&.distributor.SelectDistributorsRequest\x1a\x1d.distributor.DistributorsList\x12\\\n" +
 	"\x15UpdateDistributorName\x12).distributor.UpdateDistributorNameRequest\x1a\x18.distributor.Distributor\x12\\\n" +
 	"\x15UpdateDistributorIcon\x12).distributor.UpdateDistributorIconRequest\x1a\x18.distributor.Distributor\x12j\n" +
 	"\x1cSetDistributorStatusInactive\x120.distributor.SetDistributorStatusInactiveRequest\x1a\x18.distributor.Distributor\x12f\n" +
@@ -1058,7 +1058,7 @@ var file_svc_distributor_distributor_proto_goTypes = []any{
 	(*BlockDistributorRequest)(nil),              // 9: distributor.BlockDistributorRequest
 	(*UnblockDistributorRequest)(nil),            // 10: distributor.UnblockDistributorRequest
 	(*Distributor)(nil),                          // 11: distributor.Distributor
-	(*DistributorList)(nil),                      // 12: distributor.DistributorList
+	(*DistributorsList)(nil),                     // 12: distributor.DistributorsList
 	(*DistributorBlock)(nil),                     // 13: distributor.DistributorBlock
 	(*DistributorBlocksList)(nil),                // 14: distributor.DistributorBlocksList
 	(*SelectDistributorsRequestFilter)(nil),      // 15: distributor.SelectDistributorsRequest.filter
@@ -1074,8 +1074,8 @@ var file_svc_distributor_distributor_proto_depIdxs = []int32{
 	17, // 3: distributor.SelectDistributorBlocksRequest.pagination:type_name -> pagination.Request
 	18, // 4: distributor.Distributor.updated_at:type_name -> google.protobuf.Timestamp
 	18, // 5: distributor.Distributor.created_at:type_name -> google.protobuf.Timestamp
-	11, // 6: distributor.DistributorList.distributors:type_name -> distributor.Distributor
-	19, // 7: distributor.DistributorList.pagination:type_name -> pagination.Response
+	11, // 6: distributor.DistributorsList.distributors:type_name -> distributor.Distributor
+	19, // 7: distributor.DistributorsList.pagination:type_name -> pagination.Response
 	18, // 8: distributor.DistributorBlock.blocked_at:type_name -> google.protobuf.Timestamp
 	18, // 9: distributor.DistributorBlock.canceled_at:type_name -> google.protobuf.Timestamp
 	13, // 10: distributor.DistributorBlocksList.blocks:type_name -> distributor.DistributorBlock
@@ -1093,7 +1093,7 @@ var file_svc_distributor_distributor_proto_depIdxs = []int32{
 	10, // 22: distributor.DistributorService.UnblockDistributor:input_type -> distributor.UnblockDistributorRequest
 	11, // 23: distributor.DistributorService.CreateDistributor:output_type -> distributor.Distributor
 	11, // 24: distributor.DistributorService.GetDistributor:output_type -> distributor.Distributor
-	12, // 25: distributor.DistributorService.SelectDistributors:output_type -> distributor.DistributorList
+	12, // 25: distributor.DistributorService.SelectDistributors:output_type -> distributor.DistributorsList
 	11, // 26: distributor.DistributorService.UpdateDistributorName:output_type -> distributor.Distributor
 	11, // 27: distributor.DistributorService.UpdateDistributorIcon:output_type -> distributor.Distributor
 	11, // 28: distributor.DistributorService.SetDistributorStatusInactive:output_type -> distributor.Distributor
